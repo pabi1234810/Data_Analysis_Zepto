@@ -1,91 +1,115 @@
-﻿# Zepto Data Analysis
-This is a SQL project where I worked with a messy e-commerce dataset (from Zepto’s product listings) to clean it up, explore it, and get insights. The idea is to practice how data analysts in retail/e-commerce handle real product and inventory data.
+# Zepto Grocery Store Data Analysis
 
- # 📌 What I Did
- 
-Set up a PostgreSQL database and created a table
+## Project Overview
 
-Imported a raw CSV file (with encoding fixes)
+This project contains a comprehensive SQL-based analysis of grocery product data from Zepto, focusing on pricing strategies, inventory management, and product categorization. The analysis provides insights into product performance, pricing optimization, and inventory valuation across different categories.
 
-Performed Exploratory Data Analysis (EDA) to check categories, stock status, duplicates, etc.
+## Database Schema
 
-Cleaned the data (removed invalid rows, converted prices from paise → rupees)
+### Table Structure: `zepto`
 
-Wrote SQL queries to answer business questions like:
+| Column | Data Type | Description |
+|--------|-----------|-------------|
+| `sku_id` | SERIAL PRIMARY KEY | Unique identifier for each product SKU |
+| `category` | VARCHAR(120) | Product category classification |
+| `name` | VARCHAR(150) NOT NULL | Product name |
+| `mrp` | NUMERIC(8,2) | Maximum Retail Price |
+| `discountPercent` | NUMERIC(5,2) | Discount percentage offered |
+| `availableQuantity` | INTEGER | Current stock quantity |
+| `discountedSellingPrice` | NUMERIC(8,2) | Final selling price after discount |
+| `weightInGms` | INTEGER | Product weight in grams |
+| `outOfStock` | BOOLEAN | Stock availability status |
+| `quantity` | INTEGER | Product quantity specification |
 
-1.Which products have the highest discounts?
+## Analysis Workflow
 
-2.Which expensive items are out of stock?
+### 1. Data Exploration
+- **Row Count Verification**: Total records assessment
+- **Sample Data Review**: Initial 10 records examination
+- **Data Quality Check**: Null value identification across all columns
+- **Category Analysis**: Distinct product category enumeration
+- **Stock Status Overview**: In-stock vs out-of-stock distribution
+- **Product Variation Analysis**: Identification of products with multiple SKUs
 
-3.What’s the potential revenue by category?
+### 2. Data Cleaning Operations
+- **Zero Price Removal**: Elimination of products with invalid pricing (₹0)
+- **Currency Conversion**: Transformation from paise to rupees (division by 100)
+- **Data Validation**: Post-cleaning price verification
 
-4.Which categories give the best value for money?
+### 3. Business Intelligence Queries
 
- # 📁 Dataset
- 
-1.Source: Kaggle (Zepto product listings)
+#### Q1: Top Value Products Analysis
+Identifies the 10 products offering maximum discount percentages for customer value optimization.
 
-2.Each row = one product SKU (same product can appear in different sizes/discounts)
+#### Q2: High-Value Out-of-Stock Analysis
+Examines premium products (MRP > ₹300) currently unavailable, highlighting potential revenue loss.
 
-Main columns:
+#### Q3: Category Revenue Estimation
+Calculates projected revenue per category based on current inventory and selling prices.
 
-sku_id, name, category, mrp, discountPercent, discountedSellingPrice,
-availableQuantity, weightInGms, outOfStock, quantity
+#### Q4: Premium Low-Discount Products
+Filters high-value products (MRP > ₹500) with minimal discounts (<10%) for pricing strategy insights.
 
-# 🔧 Steps
+#### Q5: Category Discount Performance
+Ranks top 5 categories by average discount percentage to identify promotional patterns.
 
-1.Create Table – wrote SQL schema for products
+#### Q6: Price-per-Gram Value Analysis
+Evaluates cost efficiency for products above 100g weight, sorted by best value proposition.
 
-2.Import Data – used \copy in psql / pgAdmin import option
+#### Q7: Weight-Based Product Segmentation
+Categorizes products into Low (<1kg), Medium (1-5kg), and Bulk (>5kg) segments.
 
-3.Explore Data – count rows, check nulls, categories, stock status
+#### Q8: Inventory Weight Distribution
+Calculates total inventory weight per category for logistics and storage planning.
 
-4.Clean Data – fix invalid rows, convert prices, enforce rules
+## Key Features
 
-5.Business Insights – queries for discounts, revenue, inventory trends
+- **Comprehensive Data Validation**: Multi-layered approach to identify and resolve data quality issues
+- **Financial Analysis**: Revenue calculations and pricing strategy evaluation
+- **Inventory Management**: Stock level analysis and weight distribution insights
+- **Customer Value Assessment**: Discount and value proposition analysis
+- **Category Performance**: Cross-category comparison and ranking
 
-# ▶️ How to Run
+## Technical Implementation
 
-1.Create the table using schema.sql
+- **Database**: PostgreSQL (or compatible SQL database)
+- **Primary Keys**: Auto-incrementing SKU identification system
+- **Data Types**: Optimized for retail data handling with appropriate precision
+- **Indexing**: Primary key indexing for efficient query performance
 
-2.Import the CSV
+## Usage Instructions
 
-3.Run eda.sql to explore
+1. **Database Setup**: Execute the table creation script
+2. **Data Import**: Load your grocery product dataset
+3. **Exploration Phase**: Run data exploration queries to understand dataset characteristics
+4. **Cleaning Phase**: Execute data cleaning operations to ensure data integrity
+5. **Analysis Phase**: Run business intelligence queries based on specific requirements
 
-4.Run cleaning.sql to fix issues
+## Business Applications
 
-5.Run insights.sql to see business analysis
+- **Inventory Optimization**: Identify slow-moving and high-value products
+- **Pricing Strategy**: Analyze discount patterns and value propositions
+- **Category Management**: Understand category-wise performance metrics
+- **Revenue Forecasting**: Estimate potential revenue based on current inventory
+- **Supply Chain Planning**: Weight-based inventory management insights
 
+## Future Enhancements
 
+- Time-series analysis for seasonal trends
+- Customer segment analysis integration
+- Automated alert system for out-of-stock high-value items
+- Performance dashboard creation
+- Predictive analytics for demand forecasting
 
-'''(
+## Contributing
 
-CREATE TABLE zepto (
-
-  sku_id SERIAL PRIMARY KEY,               -- Auto-incrementing ID for each product
-  
-  category VARCHAR(120),                   -- Product category (up to 120 characters)
-  
-  name VARCHAR(150) NOT NULL,              -- Product name (required)
-  
-  mrp NUMERIC(8,2),                        -- Maximum Retail Price with 2 decimals
-  
-  discountPercent NUMERIC(5,2),            -- Discount percentage (e.g., 10.25%)
-  
-  availableQuantity INTEGER,               -- Available stock count
-  
-  discountedSellingPrice NUMERIC(8,2),     -- Final selling price after discount
-  
-  weightInGms INTEGER,                     -- Weight of the product in grams
-  
-  outOfStock BOOLEAN,                      -- TRUE/FALSE for stock status
-  
-  quantity INTEGER                         -- Possibly ordered quantity / unit pack
-  
-);
-)'''
+When contributing to this analysis:
+1. Maintain data privacy and security standards
+2. Document any new queries with business justification
+3. Test all modifications on sample data first
+4. Follow consistent naming conventions
 
 
+---
 
-
-
+**Note**: This analysis provides a foundation for grocery retail data insights. Adapt queries based on specific business requirements and data characteristics.
