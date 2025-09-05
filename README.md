@@ -57,3 +57,21 @@ availableQuantity, weightInGms, outOfStock, quantity
 5.Run insights.sql to see business analysis
 
 
+
+
+CREATE TABLE zepto (
+  sku_id SERIAL PRIMARY KEY,               -- Auto-incrementing ID for each product
+  category VARCHAR(120),                   -- Product category (up to 120 characters)
+  name VARCHAR(150) NOT NULL,              -- Product name (required)
+  mrp NUMERIC(8,2),                        -- Maximum Retail Price with 2 decimals
+  discountPercent NUMERIC(5,2),            -- Discount percentage (e.g., 10.25%)
+  availableQuantity INTEGER,               -- Available stock count
+  discountedSellingPrice NUMERIC(8,2),     -- Final selling price after discount
+  weightInGms INTEGER,                     -- Weight of the product in grams
+  outOfStock BOOLEAN,                      -- TRUE/FALSE for stock status
+  quantity INTEGER                         -- Possibly ordered quantity / unit pack
+);
+
+
+
+
